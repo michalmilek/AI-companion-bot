@@ -1,4 +1,3 @@
-import Categories from "@/components/Categories";
 import Search from "@/components/Search";
 import { SearchInput } from "@/components/ui/search-input";
 import prismadb from "@/lib/prismadb";
@@ -7,10 +6,10 @@ import React from "react";
 
 const RootPage = async () => {
   const categories = await prismadb.category.findMany();
+  console.log("🚀 ~ categories:", categories);
   return (
     <div>
       <Search />
-      <Categories data={categories} />
     </div>
   );
 };

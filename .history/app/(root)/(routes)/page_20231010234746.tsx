@@ -1,4 +1,3 @@
-import Categories from "@/components/Categories";
 import Search from "@/components/Search";
 import { SearchInput } from "@/components/ui/search-input";
 import prismadb from "@/lib/prismadb";
@@ -10,7 +9,6 @@ const RootPage = async () => {
   return (
     <div>
       <Search />
-      <Categories data={categories} />
     </div>
   );
 };
