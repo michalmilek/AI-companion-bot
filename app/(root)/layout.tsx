@@ -25,7 +25,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div
-      className={`h-screen ${clsx(
+      className={`min-h-screen ${clsx(
         (theme === "dark" || "system") && "bg-gray-700",
         theme === "light" && "bg-gray-400"
       )} `}>
