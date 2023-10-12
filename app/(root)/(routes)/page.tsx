@@ -5,6 +5,7 @@ import prismadb from "@/lib/prismadb";
 import { UserButton } from "@clerk/nextjs";
 import React from "react";
 import Companions from "./companion/components/Companions";
+import { checkProtection } from "@/app/utils/helpers";
 
 interface RootPageProps {
   searchParams: {
@@ -14,6 +15,8 @@ interface RootPageProps {
 }
 
 const RootPage = async ({ searchParams }: RootPageProps) => {
+  checkProtection();
+
   const { category, name } = searchParams;
 
   const categories = await prismadb.category.findMany();
@@ -37,7 +40,6 @@ const RootPage = async ({ searchParams }: RootPageProps) => {
       },
     },
   });
-  console.log("🚀 ~ companions:", companions);
   return (
     <div>
       <Search />

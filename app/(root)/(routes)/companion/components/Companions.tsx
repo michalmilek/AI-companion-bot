@@ -12,7 +12,7 @@ interface Props {
 
 const Companions = ({ companions }: Props) => {
   return (
-    <div className="flex items-center flex-wrap w-full gap-8">
+    <div className="flex items-center flex-wrap w-full gap-8 justify-center mt-8">
       {companions.length > 0 &&
         companions.map((companion) => (
           <CompanionItem

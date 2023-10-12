@@ -1,3 +1,4 @@
+import { auth, redirectToSignIn } from "@clerk/nextjs";
 import clsx from "clsx";
 
 export type Theme = "dark" | "system" | "light";
@@ -23,3 +24,13 @@ export const getInputColor = (theme: Theme) => {
     theme === "light" && "text-white"
   );
 };
+
+
+export const checkProtection = () => {
+  const {userId} = auth();
+
+
+  if(!userId) {
+    return redirectToSignIn();
+  }
+}
