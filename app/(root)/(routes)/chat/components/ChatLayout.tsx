@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { User } from "@clerk/nextjs/server";
 import { Companion, Message } from "@prisma/client";
-import React from "react";
+import React, { FormEvent, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -22,34 +22,30 @@ interface Props {
   companion: FullCompanionType;
   user: User | null | undefined;
   messages: any[];
-  addMessage: (content: string) => void;
   isLoading: boolean;
+  input: string;
+  handleInputChange: (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
 }
-
-type SchemaType = z.infer<typeof schema>;
-
-const schema = z.object({
-  content: z.string().min(3, "Name must be at least 3 characters long"),
-});
 
 const ChatLayout = ({
   companion,
   user,
   messages,
-  addMessage,
   isLoading,
+  input,
+  handleInputChange,
+  onSubmit,
 }: Props) => {
-  const form = useForm<SchemaType>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      content: "",
-    },
-  });
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const onSubmit = (values: SchemaType) => {
-    addMessage("test");
-    form.reset();
-  };
+  useEffect(() => {
+    scrollRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages.length]);
 
   return (
     <div className="flex flex-col mt-8 justify-between h-[calc(100%-100px)]">
@@ -75,36 +71,24 @@ const ChatLayout = ({
           ))}
         </div>
         {isLoading && <ChatMessageSkeleton />}
+        <div ref={scrollRef} />
       </div>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex items-center justify-center bg-transparent p-2 gap-4 w-full">
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Message</FormLabel>
-                <FormControl>
-                  <Input
-                    type="text"
-                    placeholder="Type a message..."
-                    className="h-full"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button
-            disabled={isLoading}
-            className={`self-end`}>
-            Send
-          </Button>
-        </form>
-      </Form>
+      <form
+        onSubmit={onSubmit}
+        className="flex items-center justify-center bg-transparent p-2 gap-4 w-full">
+        <Input
+          type="text"
+          placeholder="Type a message..."
+          className="h-full"
+          value={input}
+          onChange={handleInputChange}
+        />
+        <Button
+          disabled={isLoading}
+          className={`self-end`}>
+          Send
+        </Button>
+      </form>
     </div>
   );
 };
