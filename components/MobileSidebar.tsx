@@ -10,6 +10,8 @@ import { HomeIcon, UserIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import useStore from "@/app/hooks/useStore";
 import { useMediaQuery } from "react-responsive";
+import { routes } from "@/app/router/routes";
+import SingleLink from "./SingleLink";
 
 const MobileSidebar = () => {
   const { theme } = useTheme();
@@ -33,32 +35,14 @@ const MobileSidebar = () => {
           transition={{ type: "tween", duration: 0.3 }}
           exit={{ x: "100%" }}>
           <ul className="flex flex-col gap-2">
-            <li>
-              <Link
-                className={`flex flex-col items-center gap-2 py-2 ${
-                  theme === "light" ? "hover:bg-gray-700" : "hover:bg-gray-500"
-                } transition-none`}
-                href="/">
-                <HomeIcon className="h-5 w-5" />
-                {isMobileOrLarger && <span>Home</span>}
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="flex flex-col items-center gap-2 py-2 px-4 hover:bg-gray-700"
-                href="/profile">
-                <UserIcon className="h-5 w-5" />
-                <span>Profile</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="flex flex-col items-center gap-2 py-2 px-4 hover:bg-gray-700"
-                href="/contact">
-                <EnvelopeIcon className="h-5 w-5" />
-                <span>Contact</span>
-              </Link>
-            </li>
+            {routes.map((route, index) => (
+              <SingleLink
+                href={route.href}
+                icon={route.icon}
+                label={route.label}
+                key={route.label + index + 123}
+              />
+            ))}
           </ul>
         </motion.aside>
       )}
