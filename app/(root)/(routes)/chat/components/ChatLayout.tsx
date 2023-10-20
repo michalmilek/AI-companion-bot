@@ -57,10 +57,12 @@ const ChatLayout = ({
               className={`${
                 message.role === "user" ? "justify-start" : "flex-row-reverse"
               } flex gap-2 mb-2`}>
-              <AvatarWithPlaceholder
-                src={user ? user.imageUrl : companion.src}
-                name={user ? companion.userName : companion.name}
-              />
+              {message.role === "system" && (
+                <AvatarWithPlaceholder
+                  src={user ? user.imageUrl : companion.src}
+                  name={user ? companion.userName : companion.name}
+                />
+              )}
               <div
                 className={`${
                   message.role === "user" ? "bg-gray-200" : "bg-blue-500"
