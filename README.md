@@ -1,4 +1,4 @@
-# NEXTJS CHAT
+# AI COMPANION BOT
 
 ## Used libraries
 
