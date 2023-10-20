@@ -9,7 +9,6 @@ export const getCompanionById = async (companionId: string) => {
     });
     return companion;
   } catch (error) {
-    console.error("Error retrieving companion:", error);
     throw error;
   }
 };

@@ -5,7 +5,6 @@ export const getCategories = async () => {
     const categories = await prismadb.category.findMany();
     return categories;
   } catch (error) {
-    console.error("Error retrieving categories:", error);
     throw error;
   }
 };

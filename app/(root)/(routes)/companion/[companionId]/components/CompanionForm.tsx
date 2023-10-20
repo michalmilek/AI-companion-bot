@@ -34,6 +34,7 @@ import {
   usePatchCompanion,
   usePostCompanion,
 } from "@/app/services/companion/companionServices";
+import { useTheme } from "next-themes";
 
 interface CompanionFormProps {
   companion: Companion | null;
@@ -78,6 +79,7 @@ const formSchema = z.object({
 });
 
 const CompanionForm = ({ companionId }: { companionId: string }) => {
+  const { theme } = useTheme();
   const {
     data: initialData,
     isLoading: isLoadingCompanion,
@@ -128,13 +130,23 @@ const CompanionForm = ({ companionId }: { companionId: string }) => {
       </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <h2 className="text-gray-200 text-xl font-bold">
+          <h2
+            className={`${
+              theme === "light" ? "text-gray-600" : "text-gray-200"
+            } text-xl font-bold`}>
             General Information
           </h2>
-          <p className="text-gray-200">
+          <p
+            className={`text-gray-200 ${
+              theme === "light" ? "text-gray-600" : "text-gray-200"
+            }`}>
             General information about your company
           </p>
-          <SelectSeparator className="mb-4" />
+          <SelectSeparator
+            className={`mb-4 ${
+              theme === "light" ? "!text-gray-600" : "text-gray-200"
+            }`}
+          />
           <FormField
             name="name"
             control={control}
@@ -217,10 +229,16 @@ const CompanionForm = ({ companionId }: { companionId: string }) => {
             )}
           />
 
-          <h3 className="text-gray-200 text-lg font-bold mt-6">
+          <h3
+            className={`${
+              theme === "light" ? "!text-gray-600" : "text-gray-200"
+            } text-lg font-bold mt-6`}>
             Configure your companion
           </h3>
-          <p className="text-gray-200">
+          <p
+            className={`${
+              theme === "light" ? "!text-gray-600" : "text-gray-200"
+            }`}>
             More detailed information on the sample AI companion
           </p>
           <SelectSeparator className="mb-4" />
