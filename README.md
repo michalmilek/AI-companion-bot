@@ -13,6 +13,7 @@
 + zod
 + react-hook-form
 + zustand
++ stripe
   
 
 ### APP DESCRIPTION
